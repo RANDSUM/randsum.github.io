@@ -2,7 +2,6 @@
 import Layout from '../layouts/Layout.astro'
 import SectionContainer from '../components/ui/SectionContainer.astro'
 import MainContent from '../components/MainContent.astro'
-import CodeBlock from '../components/ui/CodeBlock.astro'
 import SecondaryButton from '../components/ui/SecondaryButton.astro'
 
 // Create sidebar content for the Layout component with nested structure
@@ -17,13 +16,13 @@ const sidebarContent = {
       href: '#modifiers',
       text: 'Modifiers',
       sublinks: [
-        { href: '#arithmetic', text: 'Arithmetic (+/-)' },
-        { href: '#drop-modifiers', text: 'Drop Modifiers (L/H)' },
+        { href: '#arithmetic', text: 'Basic Arithmetic (+/-)' },
+        { href: '#cap-modifiers', text: 'Cap Modifiers (C)' },
+        { href: '#drop-modifiers', text: 'Drop Modifiers (L/H/D)' },
         { href: '#reroll-modifiers', text: 'Reroll Modifiers (R)' },
-        { href: '#exploding-dice', text: 'Exploding Dice (!)' },
+        { href: '#replace-modifiers', text: 'Replace Modifiers (V)' },
         { href: '#unique-results', text: 'Unique Results (U)' },
-        { href: '#capping-modifiers', text: 'Capping Modifiers (C)' },
-        { href: '#replace-modifiers', text: 'Replace Modifiers (V)' }
+        { href: '#exploding-dice', text: 'Exploding Dice (!)' }
       ]
     },
     { href: '#complex-combinations', text: 'Complex Combinations' },
@@ -126,11 +125,16 @@ const sidebarContent = {
           >
           where N is the number of dice and S is the number of sides.
         </p>
-        <CodeBlock background="darker" class="mb-6">
-          // Roll one d20 roll(20) // number argument roll('1d20') // notation
-          string roll(&#123; sides: 20, quantity: 1 &#125;) // Roll four d6
-          roll('4d6') roll(&#123; sides: 6, quantity: 4 &#125;)
-        </CodeBlock>
+        <div class="bg-randsum-950 rounded-lg p-4 mb-6">
+          <pre class="text-silver-100 overflow-x-auto"><code class="language-typescript">// Roll one d20
+roll(20) // number argument
+roll("1d20") // notation string
+roll({ sides: 20, quantity: 1 })
+
+// Roll four d6
+roll("4d6")
+roll({ sides: 6, quantity: 4 })</code></pre>
+        </div>
       </section>
 
       <!-- Custom-Faced Dice -->
@@ -144,19 +148,21 @@ const sidebarContent = {
             >d&#123;faces&#125;</code
           > syntax:
         </p>
-        <CodeBlock background="darker" class="mb-4">
-          // Roll a coin (heads/tails) four times import &#123; rollCustomFaces
-          &#125; from '@RANDSUM/ROLLER' rollCustomFaces('4d&#123;HT&#125;')
-          rollCustomFaces(&#123; sides: ['H', 'T'], quantity: 4 &#125;) // Roll
-          Fudge/Fate dice rollCustomFaces('4d&#123;++-- &#125;') // Plus, minus,
-          blank faces rollCustomFaces(&#123; sides: ['+', '+', '-', '-', ' ', '
-          '], quantity: 4 &#125;)
-        </CodeBlock>
+        <div class="bg-randsum-950 rounded-lg p-4 mb-4">
+          <pre class="text-silver-100 overflow-x-auto"><code class="language-typescript">// Roll a coin (heads/tails) four times
+import { rollCustomFaces } from "@RANDSUM/ROLLER"
+rollCustomFaces("4d{HT}")
+rollCustomFaces({ sides: ["H", "T"], quantity: 4 })
+
+// Roll Fudge/Fate dice
+rollCustomFaces("4d{++-- }") // Plus, minus, blank faces
+rollCustomFaces({ sides: ["+", "+", "-", "-", " ", " "], quantity: 4 })</code></pre>
+        </div>
         <div class="bg-amber-900/20 border border-amber-600/30 rounded-lg p-4">
           <p class="text-amber-200">
-            <strong>Note:</strong> Custom-faced dice cannot be combined with modifiers
-            and always return a total of 0. Each face must be a single character
-            in notation strings.
+            <strong>Note:</strong> Custom-faced dice ignore modifiers and always
+            return a total of 0. Each face must be a single character in notation
+            strings.
           </p>
         </div>
       </section>
@@ -171,52 +177,235 @@ const sidebarContent = {
         </p>
       </section>
 
-      <!-- Arithmetic Modifiers -->
+      <!-- Basic Arithmetic -->
       <section id="arithmetic" class="mb-8 scroll-mt-8 ml-6">
         <h3 class="text-xl font-bold text-silver-50 mb-4">
-          Arithmetic Modifiers (+/-)
+          Basic Arithmetic (+/-)
         </h3>
         <p class="text-silver-300 mb-4">
           Add or subtract fixed values from the total result:
         </p>
+        <div class="bg-randsum-950 rounded-lg p-4 mb-6">
+          <pre class="text-silver-100 overflow-x-auto"><code class="language-typescript">roll("4d6+2") // Add 2 to total
+roll({ sides: 6, quantity: 4, modifiers: { plus: 2 } })
+
+roll("4d6-1") // Subtract 1 from total
+roll({ sides: 6, quantity: 4, modifiers: { minus: 1 } })</code></pre>
+        </div>
+      </section>
+
+      <!-- Cap Modifiers -->
+      <section id="cap-modifiers" class="mb-8 scroll-mt-8 ml-6">
+        <h3 class="text-xl font-bold text-silver-50 mb-4">Cap Modifiers (C)</h3>
+        <p class="text-silver-300 mb-4">
+          Limit roll values to specific ranges:
+        </p>
         <CodeBlock background="darker" class="mb-6">
-          roll('4d6+2') // Add 2 to total roll(&#123; sides: 6, quantity: 4,
-          modifiers: &#123; plus: 2 &#125; &#125;) roll('4d6-1') // Subtract 1
-          from total roll(&#123; sides: 6, quantity: 4, modifiers: &#123; minus:
-          1 &#125; &#125;) // Multiple operations roll('2d6+10-3') // Net +7
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20C&#123;&gt;18&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Cap rolls over 18 to 18</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; cap: &#123; greaterThan:
+          </span><span class="text-games-blades-500">18</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20C&#123;&lt;3&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Cap rolls under 3 to 3</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; cap: &#123; lessThan:
+          </span><span class="text-games-blades-500">3</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20C&#123;&lt;2,&gt;19&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400"
+            >// Cap rolls under 2 to 2 and over 19 to 19</span
+          ><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; cap: &#123; greaterThan:
+          </span><span class="text-games-blades-500">19</span><span
+            class="text-silver-300"
+            >, lessThan:
+          </span><span class="text-games-blades-500">2</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          >
         </CodeBlock>
       </section>
 
       <!-- Drop Modifiers -->
       <section id="drop-modifiers" class="mb-8 scroll-mt-8 ml-6">
         <h3 class="text-xl font-bold text-silver-50 mb-4">
-          Drop Modifiers (L/H)
+          Drop Modifiers (L/H/D)
         </h3>
-        <p class="text-silver-300 mb-4">
-          Remove extreme results from your dice pool. Perfect for D&D ability
-          scores and advantage/disadvantage mechanics:
-        </p>
+        <p class="text-silver-300 mb-4">Drop specific dice from the results:</p>
         <CodeBlock background="darker" class="mb-6">
-          // Drop lowest roll('4d6L') // Drop 1 lowest (D&D ability scores)
-          roll('4d6L2') // Drop 2 lowest roll(&#123; sides: 6, quantity: 4,
-          modifiers: &#123; drop: &#123; lowest: 1 &#125; &#125; &#125;) // Drop
-          highest roll('4d6H') // Drop 1 highest roll('2d20H') // D&D
-          disadvantage (drop highest) roll(&#123; sides: 20, quantity: 2,
-          modifiers: &#123; drop: &#123; highest: 1 &#125; &#125; &#125;) //
-          Drop by value roll('4d20D&#123;&gt;17&#125;') // Drop rolls over 17
-          roll('4d20D&#123;&lt;5&#125;') // Drop rolls under 5
-          roll('4d20D&#123;8,12&#125;') // Drop 8s and 12s
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500">"4d6L"</span><span
+            class="text-silver-300">)</span
+          >
+          <span class="text-silver-400">// Drop lowest</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">6</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; drop: &#123; lowest:
+          </span><span class="text-games-blades-500">1</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500">"4d6L2"</span><span
+            class="text-silver-300">)</span
+          >
+          <span class="text-silver-400">// Drop 2 lowest</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">6</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; drop: &#123; lowest:
+          </span><span class="text-games-blades-500">2</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500">"4d6H"</span><span
+            class="text-silver-300">)</span
+          >
+          <span class="text-silver-400">// Drop highest</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">6</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; drop: &#123; highest:
+          </span><span class="text-games-blades-500">1</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-silver-400">// Drop by value</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20D&#123;&gt;17&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Drop rolls over 17</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; drop: &#123; greaterThan:
+          </span><span class="text-games-blades-500">17</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20D&#123;&lt;5&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Drop rolls under 5</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; drop: &#123; lessThan:
+          </span><span class="text-games-blades-500">5</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20D&#123;8,12&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Drop 8s and 12s</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; drop: &#123; exact: [</span
+          ><span class="text-games-blades-500">8</span><span
+            class="text-silver-300"
+            >,
+          </span><span class="text-games-blades-500">12</span><span
+            class="text-silver-300">] &#125; &#125; &#125;)</span
+          >
         </CodeBlock>
-        <div class="bg-blue-900/20 border border-blue-600/30 rounded-lg p-4">
-          <p class="text-blue-200">
-            <strong>Gaming Tip:</strong> Use <code class="text-blue-100"
-              >4d6L</code
-            > for D&D ability scores,
-            <code class="text-blue-100">2d20H</code> for advantage, and <code
-              class="text-blue-100">2d20L</code
-            > for disadvantage.
-          </p>
-        </div>
       </section>
 
       <!-- Reroll Modifiers -->
@@ -225,21 +414,97 @@ const sidebarContent = {
           Reroll Modifiers (R)
         </h3>
         <p class="text-silver-300 mb-4">
-          Reroll dice that meet certain conditions. Great for avoiding critical
-          failures or ensuring minimum values:
+          Reroll dice matching certain conditions:
         </p>
         <CodeBlock background="darker" class="mb-6">
-          // Reroll specific values roll('4d6R&#123;1&#125;') // Reroll any 1s
-          (avoid critical failures) roll('4d6R&#123;1,2&#125;') // Reroll 1s and
-          2s roll(&#123; sides: 6, quantity: 4, modifiers: &#123; reroll: &#123;
-          exact: [1] &#125; &#125; &#125;) // Reroll by condition
-          roll('4d6R&#123;&lt;3&#125;') // Reroll results below 3
-          roll('4d6R&#123;&gt;4&#125;') // Reroll results above 4
-          roll('4d6R&#123;&lt;2,&gt;5&#125;') // Reroll results outside 2-5
-          range // Limit reroll attempts roll('4d20R&#123;&lt;5&#125;3') //
-          Reroll under 5, max 3 attempts roll(&#123; sides: 20, quantity: 4,
-          modifiers: &#123; reroll: &#123; lessThan: 5, max: 3 &#125; &#125;
-          &#125;)
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20R&#123;&gt;17&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Reroll results over 17</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; reroll: &#123; greaterThan:
+          </span><span class="text-games-blades-500">17</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20R&#123;&lt;5&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Reroll results under 5</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; reroll: &#123; lessThan:
+          </span><span class="text-games-blades-500">5</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20R&#123;8,12&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Reroll 8s and 12s</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; reroll: &#123; exact: [</span
+          ><span class="text-games-blades-500">8</span><span
+            class="text-silver-300"
+            >,
+          </span><span class="text-games-blades-500">12</span><span
+            class="text-silver-300">] &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20R&#123;&lt;5&#125;3"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Reroll under 5, max 3 attempts</span
+          ><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; reroll: &#123; lessThan:
+          </span><span class="text-games-blades-500">5</span><span
+            class="text-silver-300"
+            >, max:
+          </span><span class="text-games-blades-500">3</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          >
         </CodeBlock>
       </section>
 
@@ -249,63 +514,31 @@ const sidebarContent = {
           Exploding Dice (!)
         </h3>
         <p class="text-silver-300 mb-4">
-          Roll additional dice when maximum values are rolled. Perfect for
-          critical hits and open-ended results:
+          Roll additional dice on maximum results:
         </p>
         <CodeBlock background="darker" class="mb-6">
-          // Basic exploding dice roll('3d6!') // Roll extra d6 for each 6
-          rolled roll('2d10!') // Roll extra d10 for each 10 rolled roll(&#123;
-          sides: 6, quantity: 3, modifiers: &#123; explode: true &#125; &#125;)
-          // Common gaming applications roll('1d8!') // Exploding damage die
-          roll('4d6!') // Exploding ability score roll
-        </CodeBlock>
-        <div class="bg-red-900/20 border border-red-600/30 rounded-lg p-4">
-          <p class="text-red-200">
-            <strong>Critical Hits:</strong> Exploding dice are perfect for dramatic
-            moments. Each maximum roll adds another die to keep the excitement going!
-          </p>
-        </div>
-      </section>
-
-      <!-- Unique Results -->
-      <section id="unique-results" class="mb-8 scroll-mt-8 ml-6">
-        <h3 class="text-xl font-bold text-silver-50 mb-4">
-          Unique Results (U)
-        </h3>
-        <p class="text-silver-300 mb-4">
-          Ensure all dice show different values. Great for card-like mechanics
-          and lottery systems:
-        </p>
-        <CodeBlock background="darker" class="mb-6">
-          // All results must be unique roll('4d20U') // All different results
-          (like drawing cards) roll('5d6U') // All different results (if
-          possible) roll(&#123; sides: 20, quantity: 4, modifiers: &#123;
-          unique: true &#125; &#125;) // Allow specific duplicates
-          roll('4d20U&#123;5,10&#125;') // Unique except 5s and 10s can repeat
-          roll(&#123; sides: 20, quantity: 4, modifiers: &#123; unique: &#123;
-          notUnique: [5, 10] &#125; &#125; &#125;)
-        </CodeBlock>
-      </section>
-
-      <!-- Capping Modifiers -->
-      <section id="capping-modifiers" class="mb-8 scroll-mt-8 ml-6">
-        <h3 class="text-xl font-bold text-silver-50 mb-4">
-          Capping Modifiers (C)
-        </h3>
-        <p class="text-silver-300 mb-4">
-          Limit roll values to specific ranges. Useful for bounded results and
-          game balance:
-        </p>
-        <CodeBlock background="darker" class="mb-6">
-          // Cap maximum values roll('4d20C&#123;&gt;18&#125;') // Cap rolls
-          over 18 to 18 roll(&#123; sides: 20, quantity: 4, modifiers: &#123;
-          cap: &#123; greaterThan: 18 &#125; &#125; &#125;) // Cap minimum
-          values roll('4d20C&#123;&lt;3&#125;') // Cap rolls under 3 to 3
-          roll(&#123; sides: 20, quantity: 4, modifiers: &#123; cap: &#123;
-          lessThan: 3 &#125; &#125; &#125;) // Cap both extremes
-          roll('4d20C&#123;&lt;2,&gt;19&#125;') // Cap rolls under 2 to 2 and
-          over 19 to 19 roll(&#123; sides: 20, quantity: 4, modifiers: &#123;
-          cap: &#123; greaterThan: 19, lessThan: 2 &#125; &#125; &#125;)
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500">"4d20!"</span><span
+            class="text-silver-300">)</span
+          >
+          <span class="text-silver-400"
+            >// Roll an extra d20 for each 20 rolled</span
+          ><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; explode:
+          </span><span class="text-games-blades-500">true</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125;)</span
+          >
         </CodeBlock>
       </section>
 
@@ -315,14 +548,139 @@ const sidebarContent = {
           Replace Modifiers (V)
         </h3>
         <p class="text-silver-300 mb-4">
-          Replace specific results with new values. Great for custom game
-          mechanics:
+          Replace specific results with new values:
         </p>
         <CodeBlock background="darker" class="mb-6">
-          // Replace specific values roll('4d20V&#123;8=12&#125;') // Replace 8s
-          with 12s roll('4d20V&#123;&gt;17=20&#125;') // Replace results over 17
-          with 20 roll('4d20V&#123;&lt;5=1&#125;') // Replace results under 5
-          with 1
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20V&#123;8=12&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Replace 8s with 12s</span><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; replace: &#123; from:
+          </span><span class="text-games-blades-500">8</span><span
+            class="text-silver-300"
+            >, to:
+          </span><span class="text-games-blades-500">12</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20V&#123;&gt;17=20&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Replace results over 17 with 20</span
+          ><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; replace: &#123; from: &#123; greaterThan:
+          </span><span class="text-games-blades-500">17</span><span
+            class="text-silver-300"
+          >
+            &#125;, to:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20V&#123;&lt;5=1&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400">// Replace results under 5 with 1</span
+          ><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; replace: &#123; from: &#123; lessThan:
+          </span><span class="text-games-blades-500">5</span><span
+            class="text-silver-300"
+          >
+            &#125;, to:
+          </span><span class="text-games-blades-500">1</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125; &#125;)</span
+          >
+        </CodeBlock>
+      </section>
+
+      <!-- Unique Results -->
+      <section id="unique-results" class="mb-8 scroll-mt-8 ml-6">
+        <h3 class="text-xl font-bold text-silver-50 mb-4">
+          Unique Results (U)
+        </h3>
+        <p class="text-silver-300 mb-4">Force unique rolls within a pool:</p>
+        <CodeBlock background="darker" class="mb-6">
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500">"4d20U"</span><span
+            class="text-silver-300">)</span
+          >
+          <span class="text-silver-400">// All results must be unique</span><br
+          />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; unique:
+          </span><span class="text-games-blades-500">true</span><span
+            class="text-silver-300"
+          >
+            &#125; &#125;)</span
+          ><br />
+          <br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300">(</span
+          ><span class="text-games-daggerheart-500"
+            >"4d20U&#123;5,10&#125;"</span
+          ><span class="text-silver-300">)</span>
+          <span class="text-silver-400"
+            >// Unique except 5s and 10s can repeat</span
+          ><br />
+          <span class="text-games-fifth-500">roll</span><span
+            class="text-silver-300"
+            >(&#123; sides:
+          </span><span class="text-games-blades-500">20</span><span
+            class="text-silver-300"
+            >, quantity:
+          </span><span class="text-games-blades-500">4</span><span
+            class="text-silver-300"
+            >, modifiers: &#123; unique: &#123; notUnique: [</span
+          ><span class="text-games-blades-500">5</span><span
+            class="text-silver-300"
+            >,
+          </span><span class="text-games-blades-500">10</span><span
+            class="text-silver-300">] &#125; &#125; &#125;)</span
+          >
         </CodeBlock>
       </section>
 
