@@ -1,6 +1,6 @@
 {
   "name": "@randsum/site",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Modern marketing website for the RANDSUM monorepo packages",
   "private": true,
   "author": {
