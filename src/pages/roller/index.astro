@@ -6,13 +6,13 @@ import CompactButton from '../../components/ui/CompactButton.astro'
 ---
 
 <Layout
-  title="@randsum/roller - Advanced Dice Rolling Engine"
+  title="@RANDSUM/ROLLER - Advanced Dice Rolling Engine"
   description="The core RANDSUM dice rolling engine with powerful notation support and advanced modifiers"
   additionalNavigationItems={rollerAdditionalNavigation}
 >
   <!-- Hero Section -->
   <HeroSection
-    title="@randsum/roller"
+    title="@RANDSUM/ROLLER"
     description="The core RANDSUM dice rolling engine. Advanced notation support, powerful modifiers, and lightning-fast performance for all your tabletop gaming needs."
     class="overflow-hidden"
   >
@@ -174,7 +174,7 @@ import CompactButton from '../../components/ui/CompactButton.astro'
   </div>
 
   <!-- Quick Start Section -->
-  <div class="bg-randsum-900/50 py-24 sm:py-32">
+  <div class="py-24 sm:py-32">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="mx-auto max-w-2xl text-center">
         <h2
@@ -203,36 +203,6 @@ roll('4d6+2')    // Roll 4d6, add 2
 roll('4d6L')     // Roll 4d6, drop lowest
 roll('2d20H')    // Roll 2d20, keep highest
 roll('3d6!')     // Exploding dice</code></pre>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA Section -->
-  <div class="py-24 sm:py-32">
-    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl text-center">
-        <h2
-          class="text-3xl font-bold tracking-tight text-silver-50 sm:text-4xl"
-        >
-          Ready to roll?
-        </h2>
-        <p class="mt-6 text-lg leading-8 text-silver-300">
-          Explore the documentation and examples to get the most out of
-          @randsum/roller
-        </p>
-        <div class="mt-10 flex items-center justify-center gap-x-6">
-          <CompactButton href="/roller/docs" variant="primary">
-            Read the Docs
-          </CompactButton>
-          <CompactButton
-            href="https://github.com/RANDSUM/randsum/tree/main/packages/roller"
-            variant="secondary"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            View on GitHub <span aria-hidden="true">→</span>
-          </CompactButton>
         </div>
       </div>
     </div>

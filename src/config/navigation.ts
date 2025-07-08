@@ -5,8 +5,8 @@ export const mainNavigation: NavigationItem[] = [
   // Core Package
   {
     href: '/roller',
-    label: 'roller',
-    prefix: '@randsum/',
+    label: 'ROLLER',
+    prefix: '@RANDSUM/',
     color:
       'bg-gradient-to-r from-silver-300 to-silver-100 bg-clip-text text-transparent',
     hoverColor: 'hover:bg-randsum-800'
@@ -15,36 +15,36 @@ export const mainNavigation: NavigationItem[] = [
   // Game Packages
   {
     href: '/blades',
-    label: 'blades',
-    prefix: '@randsum/',
+    label: 'BLADES',
+    prefix: '@RANDSUM/',
     color: 'text-games-blades-500',
     hoverColor: 'hover:bg-games-blades-600/10'
   },
   {
     href: '/daggerheart',
-    label: 'daggerheart',
-    prefix: '@randsum/',
+    label: 'DAGGERHEART',
+    prefix: '@RANDSUM/',
     color: 'text-games-daggerheart-500',
     hoverColor: 'hover:bg-games-daggerheart-600/10'
   },
   {
     href: '/fifth',
-    label: 'fifth',
-    prefix: '@randsum/',
+    label: 'FIFTH',
+    prefix: '@RANDSUM/',
     color: 'text-games-fifth-500',
     hoverColor: 'hover:bg-games-fifth-600/10'
   },
   {
     href: '/root-rpg',
-    label: 'root-rpg',
-    prefix: '@randsum/',
+    label: 'ROOT-RPG',
+    prefix: '@RANDSUM/',
     color: 'text-games-root-rpg-500',
     hoverColor: 'hover:bg-games-root-rpg-600/10'
   },
   {
     href: '/salvageunion',
-    label: 'salvageunion',
-    prefix: '@randsum/',
+    label: 'SALVAGEUNION',
+    prefix: '@RANDSUM/',
     color: 'text-games-salvageunion-500',
     hoverColor: 'hover:bg-games-salvageunion-600/10'
   }
