@@ -11,8 +11,7 @@
   "homepage": "https://github.com/RANDSUM/randsum",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RANDSUM/randsum.git",
-    "directory": "apps/site"
+    "url": "git+https://github.com/RANDSUM/randsum.github.io"
   },
   "type": "module",
   "scripts": {
