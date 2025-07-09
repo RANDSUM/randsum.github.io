@@ -22,14 +22,14 @@ declare module 'astro:content' {
   export interface RenderedContent {
     html: string
     metadata?: {
-      imagePaths: Array<string>
+      imagePaths: string[]
       [key: string]: unknown
     }
   }
 }
 
 declare module 'astro:content' {
-  type Flatten<T> = T extends { [K: string]: infer U } ? U : never
+  type Flatten<T> = T extends Record<string, infer U> ? U : never
 
   export type CollectionKey = keyof AnyEntryMap
   export type CollectionEntry<C extends CollectionKey> = Flatten<AnyEntryMap[C]>
@@ -42,23 +42,23 @@ declare module 'astro:content' {
     ContentEntryMap[C]
   >['slug']
 
-  export type ReferenceDataEntry<
+  export interface ReferenceDataEntry<
     C extends CollectionKey,
     E extends keyof DataEntryMap[C] = string
-  > = {
+  > {
     collection: C
     id: E
   }
-  export type ReferenceContentEntry<
+  export interface ReferenceContentEntry<
     C extends keyof ContentEntryMap,
     E extends ValidContentEntrySlug<C> | (string & {}) = string
-  > = {
+  > {
     collection: C
     slug: E
   }
-  export type ReferenceLiveEntry<
+  export interface ReferenceLiveEntry<
     C extends keyof LiveContentConfig['collections']
-  > = {
+  > {
     collection: C
     id: string
   }
@@ -186,9 +186,9 @@ declare module 'astro:content' {
       ReturnTypeOrOriginal<Required<ContentConfig['collections'][C]>['schema']>
     >
 
-  type ContentEntryMap = {}
+  interface ContentEntryMap {}
 
-  type DataEntryMap = {}
+  interface DataEntryMap {}
 
   type AnyEntryMap = ContentEntryMap & DataEntryMap
 
