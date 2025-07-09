@@ -2,9 +2,8 @@
 import Layout from '../layouts/Layout.astro'
 import SectionContainer from '../components/ui/SectionContainer.astro'
 import MainContent from '../components/MainContent.astro'
-import { getEntry } from 'astro:content'
+import { getEntry, render } from 'astro:content'
 import { generateSidebarFromHeadings } from '../utils/markdown'
-import type { MarkdownHeading } from 'astro'
 
 // Get the dice notation content
 const diceNotationEntry = await getEntry('docs', 'dice-notation')
@@ -13,23 +12,14 @@ if (!diceNotationEntry) {
   throw new Error('Dice notation content not found')
 }
 
-// Render the content with proper type assertions
-const renderResult = await diceNotationEntry.render()
-const Content = renderResult.Content
-const headings = renderResult.headings as MarkdownHeading[]
+const {
+  Content,
+  headings,
+  remarkPluginFrontmatter: { title, description }
+} = await render(diceNotationEntry)
 
 // Generate sidebar content from markdown headings
 const sidebarContent = generateSidebarFromHeadings(headings)
-
-// Get the frontmatter data with type assertion
-const data = diceNotationEntry.data as {
-  title: string
-  description: string
-  author?: string
-  lastModified?: string
-  tags?: string[]
-}
-const { title, description } = data
 ---
 
 <Layout
