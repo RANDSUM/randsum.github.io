@@ -45,7 +45,7 @@ const currentPackage = getCurrentPackage()
 ---
 
 <aside
-  class="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 bg-randsum-900"
+  class="hidden lg:flex lg:flex-col lg:w-69 lg:fixed lg:inset-y-0 bg-randsum-900"
 >
   <div class="flex-1 flex flex-col min-h-0">
     <a
@@ -96,18 +96,16 @@ const currentPackage = getCurrentPackage()
               <>
                 <a
                   href={item.href}
-                  class={`block px-3 py-2 text-sm rounded-md transition-colors ${
+                  class={`block px-3 text-sm rounded-md transition-colors ${
                     item.hoverColor ?? 'hover:bg-randsum-800'
                   }`}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noopener noreferrer' : undefined}
                 >
                   <div class="text-base">
-                    <span
-                      class={`font-normal ${item.color ?? 'text-silver-50'}`}
-                    >
+                    <span class={`font-bold ${item.color ?? 'text-silver-50'}`}>
                       {item.prefix && (
-                        <span class="text-xs text-silver-50 font-normal">
+                        <span class="text-xs text-silver-50 font-bold">
                           {item.prefix}
                         </span>
                       )}
@@ -123,7 +121,7 @@ const currentPackage = getCurrentPackage()
                       {additionalItems.map((subItem) => (
                         <a
                           href={subItem.href}
-                          class={`group flex items-center px-3 py-2 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 transition-colors ${
+                          class={`group flex items-center px-3 py-1 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 transition-colors ${
                             subItem.hoverColor ?? 'hover:bg-randsum-800'
                           }`}
                           target={subItem.external ? '_blank' : undefined}
@@ -152,7 +150,7 @@ const currentPackage = getCurrentPackage()
             <div class="">
               <a
                 href="/dice-notation"
-                class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 hover:bg-randsum-800 transition-colors"
+                class="group flex items-center px-3 py-1 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 hover:bg-randsum-800 transition-colors"
               >
                 <svg
                   class="mr-3 h-5 w-5"
@@ -172,7 +170,7 @@ const currentPackage = getCurrentPackage()
 
               <a
                 href="https://github.com/RANDSUM/randsum"
-                class="group flex items-center px-3 py-2 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 hover:bg-randsum-800 transition-colors"
+                class="group flex items-center px-3 py-1 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 hover:bg-randsum-800 transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -254,11 +252,11 @@ const currentPackage = getCurrentPackage()
               >
                 <div class="text-base">
                   {item.prefix && (
-                    <span class="text-xs text-silver-50 font-normal">
+                    <span class="text-xs text-silver-50 font-bold">
                       {item.prefix}
                     </span>
                   )}
-                  <span class={`font-normal ${item.color ?? 'text-silver-50'}`}>
+                  <span class={`font-bold ${item.color ?? 'text-silver-50'}`}>
                     {item.label}
                   </span>
                 </div>
@@ -289,6 +287,18 @@ const currentPackage = getCurrentPackage()
                 class="block px-3 py-2 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 hover:bg-randsum-800 transition-colors"
               >
                 Dice Notation
+              </a>
+              <a
+                href="/dice-roller"
+                class="block px-3 py-2 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 hover:bg-randsum-800 transition-colors"
+              >
+                Dice Roller
+              </a>
+              <a
+                href="/notation-validator"
+                class="block px-3 py-2 text-sm font-medium rounded-md text-silver-300 hover:text-silver-50 hover:bg-randsum-800 transition-colors"
+              >
+                Notation Validator
               </a>
               <a
                 href="https://github.com/RANDSUM/randsum"

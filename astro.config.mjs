@@ -8,6 +8,13 @@ export default defineConfig({
   site: 'https://randsum.github.io',
   output: 'static',
   integrations: [mdx()],
+  markdown: {
+    syntaxHighlight: 'shiki',
+    shikiConfig: {
+      theme: 'dark-plus',
+      wrap: true
+    }
+  },
   vite: {
     resolve: {
       alias: {

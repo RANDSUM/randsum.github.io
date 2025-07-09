@@ -1,5 +1,7 @@
 ---
 import MainContent from './MainContent.astro'
+import CompactButton from './ui/CompactButton.astro'
+import { Code } from 'astro:components'
 
 export interface Props {
   title?: string
@@ -7,6 +9,12 @@ export interface Props {
   description?: string
   showLogo?: boolean
   class?: string
+  packageName?: string
+  packageColor?: string
+  gameWebsiteUrl?: string
+  githubUrl?: string
+  docsUrl?: string
+  example?: string
 }
 
 const {
@@ -14,8 +22,17 @@ const {
   subtitle,
   description,
   showLogo = false,
-  class: className = ''
+  example,
+  class: className = '',
+  packageName,
+  packageColor,
+  gameWebsiteUrl,
+  githubUrl,
+  docsUrl
 } = Astro.props
+
+const finalDocsUrl =
+  docsUrl ?? (packageName ? `/${packageName.toLowerCase()}/docs` : undefined)
 ---
 
 <section class={`relative h-screen flex items-center ${className}`}>
@@ -44,8 +61,13 @@ const {
         class="text-4xl lg:text-6xl xl:text-7xl font-bold text-silver-50 mb-6 leading-tight"
       >
         {
-          Astro.slots.has('title') ? (
-            <slot name="title" />
+          packageName ? (
+            <span>
+              <>
+                <span class="text-silver-50">@RANDSUM/</span>
+                <span class={packageColor}>{packageName}</span>
+              </>
+            </span>
           ) : (
             <span class="bg-gradient-to-r from-silver-50 via-silver-200 to-silver-50 bg-clip-text text-transparent">
               {title}
@@ -70,8 +92,47 @@ const {
         )
       }
 
-      <!-- CTA Buttons Slot -->
-      <slot name="cta" />
+      {
+        example && (
+          <Code code={example} lang="ts" class="text-left p-4 rounded-md" />
+        )
+      }
+
+      <div class="flex py-4 flex-col sm:flex-row gap-4 justify-center">
+        {
+          finalDocsUrl && (
+            <CompactButton href={finalDocsUrl} variant="primary">
+              View Documentation <span aria-hidden="true">→</span>
+            </CompactButton>
+          )
+        }
+
+        {
+          gameWebsiteUrl && (
+            <CompactButton
+              href={gameWebsiteUrl}
+              variant="secondary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Official Game Site <span aria-hidden="true">→</span>
+            </CompactButton>
+          )
+        }
+
+        {
+          githubUrl && (
+            <CompactButton
+              href={githubUrl}
+              variant="tertiary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub <span aria-hidden="true">→</span>
+            </CompactButton>
+          )
+        }
+      </div>
     </div>
   </MainContent>
 </section>
