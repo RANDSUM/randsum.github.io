@@ -11,9 +11,15 @@ const { href, class: className = '', target, rel } = Astro.props
 
 <a
   href={href}
-  class={`inline-flex items-center px-8 py-4 bg-randsum-600 hover:bg-randsum-500 text-silver-50 font-semibold rounded-lg transition-all duration-200 transform hover:scale-105 hover:shadow-glow ${className}`}
+  class={`group relative inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-randsum-600 to-randsum-500 hover:from-randsum-500 hover:to-randsum-400 text-silver-50 font-semibold rounded-xl shadow-elegant hover:shadow-deep transition-all duration-300 ease-out transform hover:scale-105 hover:-translate-y-1 focus-visible:ring-2 focus-visible:ring-randsum-400 focus-visible:ring-offset-2 focus-visible:ring-offset-randsum-950 overflow-hidden ${className}`}
   target={target}
   rel={rel}
 >
-  <slot />
+  <span class="relative z-10 flex items-center gap-2">
+    <slot />
+  </span>
+  <div
+    class="absolute inset-0 rounded-xl bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+  >
+  </div>
 </a>

@@ -51,9 +51,22 @@ const backgroundClasses = useGradientBackground
 >
   {
     showLogo && (
-      <div class="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+      <div class="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-30" />
     )
   }
+
+  <!-- Subtle animated background elements -->
+  <div class="absolute inset-0 overflow-hidden">
+    <div
+      class="absolute -top-40 -right-40 w-80 h-80 bg-randsum-500/10 rounded-full blur-3xl animate-float"
+    >
+    </div>
+    <div
+      class="absolute -bottom-40 -left-40 w-80 h-80 bg-randsum-400/10 rounded-full blur-3xl animate-float"
+      style="animation-delay: -1s;"
+    >
+    </div>
+  </div>
 
   <MainContent class="relative">
     <div class="text-center">
@@ -71,18 +84,20 @@ const backgroundClasses = useGradientBackground
 
       <!-- Main heading -->
       <h1
-        class="text-4xl lg:text-6xl xl:text-7xl font-bold text-silver-50 mb-6 leading-tight"
+        class="text-4xl lg:text-6xl xl:text-7xl font-bold text-silver-50 mb-6 leading-tight animate-slide-up"
       >
         {
           packageName ? (
             <span>
               <>
                 <span class="text-silver-50">@RANDSUM/</span>
-                <span class={packageColor}>{packageName}</span>
+                <span class={`${packageColor} drop-shadow-lg`}>
+                  {packageName}
+                </span>
               </>
             </span>
           ) : (
-            <span class="bg-gradient-to-r from-silver-50 via-silver-200 to-silver-50 bg-clip-text text-transparent">
+            <span class="bg-gradient-to-r from-silver-50 via-silver-200 to-silver-50 bg-clip-text text-transparent drop-shadow-lg">
               {title}
             </span>
           )
@@ -91,7 +106,10 @@ const backgroundClasses = useGradientBackground
 
       {
         subtitle && (
-          <p class="text-xl lg:text-2xl text-silver-200 mb-8 max-w-4xl mx-auto leading-relaxed">
+          <p
+            class="text-xl lg:text-2xl text-silver-200 mb-8 max-w-4xl mx-auto leading-relaxed animate-slide-up"
+            style="animation-delay: 0.1s;"
+          >
             {subtitle}
           </p>
         )
@@ -99,7 +117,10 @@ const backgroundClasses = useGradientBackground
 
       {
         description && (
-          <p class="text-lg text-silver-300 mb-12 max-w-3xl mx-auto">
+          <p
+            class="text-lg text-silver-300 mb-12 max-w-3xl mx-auto leading-relaxed animate-slide-up"
+            style="animation-delay: 0.2s;"
+          >
             {description}
           </p>
         )

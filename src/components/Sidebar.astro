@@ -45,15 +45,22 @@ const currentPackage = getCurrentPackage()
 ---
 
 <aside
-  class="hidden lg:flex lg:flex-col lg:w-69 lg:fixed lg:inset-y-0 bg-randsum-900"
+  class="hidden lg:flex lg:flex-col lg:w-69 lg:fixed lg:inset-y-0 bg-randsum-900/95 backdrop-blur-xl border-r border-randsum-700/50 rounded-r-lg"
 >
   <div class="flex-1 flex flex-col min-h-0">
     <a
       href="/"
-      class="flex items-center h-16 flex-shrink-0 px-4 bg-randsum-950 hover:bg-randsum-900 transition-colors"
+      class="group flex items-center h-16 flex-shrink-0 px-4 bg-randsum-950/90 hover:bg-randsum-900/90 transition-all duration-300"
     >
-      <img class="h-8 w-auto" src="/icon.webp" alt="RANDSUM" />
-      <span class="ml-3 text-xl font-bold text-silver-50">RANDSUM</span>
+      <img
+        class="h-8 w-auto transition-transform duration-300 group-hover:scale-110"
+        src="/icon.webp"
+        alt="RANDSUM"
+      />
+      <span
+        class="ml-3 text-xl font-bold text-silver-50 transition-colors duration-300 group-hover:text-white"
+        >RANDSUM</span
+      >
     </a>
 
     <nav class="flex-1 px-4 py-6 space-y-1">
@@ -68,9 +75,9 @@ const currentPackage = getCurrentPackage()
                 <li>
                   <a
                     href={link.href}
-                    class="block px-3 py-2 text-sm text-silver-300 hover:text-silver-50 hover:bg-randsum-800 rounded-md transition-colors"
+                    class="group block px-3 py-2 text-sm text-silver-300 hover:text-silver-50 hover:bg-randsum-800/60 rounded-lg transition-all duration-300 hover:shadow-elegant hover:translate-x-1"
                   >
-                    {link.text}
+                    <span class="relative z-10">{link.text}</span>
                   </a>
                   {link.sublinks && (
                     <ul class="ml-4 mt-2 space-y-1">
@@ -78,9 +85,9 @@ const currentPackage = getCurrentPackage()
                         <li>
                           <a
                             href={sublink.href}
-                            class="block px-3 py-1 text-xs text-silver-400 hover:text-silver-200 hover:bg-randsum-800 rounded-md transition-colors"
+                            class="group block px-3 py-1 text-xs text-silver-400 hover:text-silver-200 hover:bg-randsum-800/40 rounded-lg transition-all duration-300 hover:translate-x-1"
                           >
-                            {sublink.text}
+                            <span class="relative z-10">{sublink.text}</span>
                           </a>
                         </li>
                       ))}
