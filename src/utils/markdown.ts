@@ -29,17 +29,14 @@ export function generateSidebarFromHeadings(
     }
 
     if (heading.depth === 2) {
-      // Top-level heading
       links.push(link)
       linkStack.length = 0
       linkStack.push(link)
     } else if (heading.depth === 3) {
-      // Sub-heading
       const parent = linkStack[0]
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (parent) {
-        if (!parent.sublinks) {
-          parent.sublinks = []
-        }
+        parent.sublinks ??= []
         parent.sublinks.push(link)
       }
     }
