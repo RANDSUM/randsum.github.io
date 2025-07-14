@@ -15,6 +15,9 @@ export interface Props {
   githubUrl?: string
   docsUrl?: string
   example?: string
+  useGradientBackground?: boolean
+  gradientFrom?: string
+  gradientTo?: string
 }
 
 const {
@@ -28,14 +31,24 @@ const {
   packageColor,
   gameWebsiteUrl,
   githubUrl,
-  docsUrl
+  docsUrl,
+  useGradientBackground = false,
+  gradientFrom = 'from-randsum-950',
+  gradientTo = 'to-randsum-900'
 } = Astro.props
 
 const finalDocsUrl =
   docsUrl ?? (packageName ? `/${packageName.toLowerCase()}/docs` : undefined)
+
+// Create gradient background classes
+const backgroundClasses = useGradientBackground
+  ? `bg-gradient-to-br ${gradientFrom} ${gradientTo}`
+  : ''
 ---
 
-<section class={`relative h-screen flex items-center ${className}`}>
+<section
+  class={`relative h-screen flex items-center ${className} ${backgroundClasses}`}
+>
   {
     showLogo && (
       <div class="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
