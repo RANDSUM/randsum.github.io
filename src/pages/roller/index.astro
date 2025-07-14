@@ -2,6 +2,9 @@
 import Layout from '../../layouts/Layout.astro'
 import { rollerAdditionalNavigation } from '../../config/navigation'
 import HeroSection from '../../components/HeroSection.astro'
+import { extractLandingPageExample } from '../../utils/markdown'
+
+const exampleCode = await extractLandingPageExample('roller')
 ---
 
 <Layout
@@ -16,27 +19,7 @@ import HeroSection from '../../components/HeroSection.astro'
     packageName="ROLLER"
     packageColor="text-randsum-500"
     docsUrl="/roller/docs"
-    example={`import { roll, validateNotation } from '@RANDSUM/ROLLER'
-
-// Basic dice rolling
-const damage = roll('2d6+3')
-console.log(\`Damage: \${damage.total}\`) // 5-15
-
-// Advanced modifiers
-const abilityScore = roll('4d6L') // Drop lowest
-const advantage = roll('2d20H')   // Keep highest
-
-// Validate notation before rolling
-const isValid = validateNotation('4d6R{1}!')
-if (isValid.valid) {
-  const result = roll('4d6R{1}!') // Reroll 1s, exploding
-  console.log(\`Result: \${result.total}\`)
-}
-
-// Custom dice faces
-const direction = roll('1d{NSEW}')
-console.log(\`Go: \${direction.total}\`)
-`}
+    example={exampleCode}
     githubUrl="https://github.com/RANDSUM/randsum/tree/main/packages/roller"
   />
 </Layout>
