@@ -3,8 +3,10 @@ import Layout from '../../layouts/Layout.astro'
 import { fifthAdditionalNavigation } from '../../config/navigation'
 import HeroSection from '../../components/HeroSection.astro'
 import { getPackageConfig } from '../../config/packages'
+import { extractLandingPageExample } from '../../utils/markdown'
 
 const packageConfig = getPackageConfig('fifth')
+const exampleCode = await extractLandingPageExample('fifth')
 ---
 
 <Layout
@@ -19,6 +21,7 @@ const packageConfig = getPackageConfig('fifth')
     packageColor={packageConfig?.color}
     gameWebsiteUrl={packageConfig?.gameWebsiteUrl}
     githubUrl={packageConfig?.githubUrl}
+    example={exampleCode}
     useGradientBackground={true}
     gradientFrom="from-randsum-950"
     gradientTo="to-games-fifth-700"

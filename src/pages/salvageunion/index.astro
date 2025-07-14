@@ -3,8 +3,10 @@ import Layout from '../../layouts/Layout.astro'
 import { salvageunionAdditionalNavigation } from '../../config/navigation'
 import HeroSection from '../../components/HeroSection.astro'
 import { getPackageConfig } from '../../config/packages'
+import { extractLandingPageExample } from '../../utils/markdown'
 
 const packageConfig = getPackageConfig('salvageunion')
+const exampleCode = await extractLandingPageExample('salvageunion')
 ---
 
 <Layout
@@ -20,6 +22,7 @@ const packageConfig = getPackageConfig('salvageunion')
     packageColor={packageConfig?.color}
     gameWebsiteUrl={packageConfig?.gameWebsiteUrl}
     githubUrl={packageConfig?.githubUrl}
+    example={exampleCode}
     useGradientBackground={true}
     gradientFrom="from-randsum-950"
     gradientTo="to-games-salvageunion-700"

@@ -84,14 +84,14 @@ const backgroundClasses = useGradientBackground
 
       <!-- Main heading -->
       <h1
-        class="text-4xl lg:text-6xl xl:text-7xl font-bold text-silver-50 mb-6 leading-tight animate-slide-up"
+        class="text-4xl lg:text-6xl xl:text-7xl font-bold text-silver-50 mb-6 leading-tight animate-slide-up hover:scale-105 transition-all duration-300 ease-out cursor-default inline-block"
       >
         {
           packageName ? (
             <span>
               <>
                 <span class="text-silver-50">@RANDSUM/</span>
-                <span class={`${packageColor} drop-shadow-lg`}>
+                <span class={`${String(packageColor)} drop-shadow-lg`}>
                   {packageName}
                 </span>
               </>
