@@ -9,7 +9,7 @@ tags: ['examples', 'typescript', 'landing-pages', 'packages']
 ## roller
 
 ```ts
-import { roll, validateNotation } from '@RANDSUM/ROLLER'
+import { roll, validateNotation } from '@randsum/roller'
 
 const userInput = '4d6L'
 const { valid, description, notation } = validateNotation(userInput)
@@ -22,7 +22,7 @@ if (notation) {
 ## blades
 
 ```ts
-import { rollBlades } from '@RANDSUM/BLADES'
+import { rollBlades } from '@randsum/blades'
 
 const roll = rollBlades(4) // roll 2 d6, add 4
 console.log(roll.outcome) // 'critical' | 'success' | 'partial' | 'failure'
@@ -31,7 +31,7 @@ console.log(roll.outcome) // 'critical' | 'success' | 'partial' | 'failure'
 ## fifth
 
 ```ts
-import { d20roll } from '@RANDSUM/FIFTH'
+import { d20roll } from '@randsum/fifth'
 
 // Different d20 roll types
 const advantage = d20roll({ modifier: 5, advantage: true })
@@ -41,7 +41,7 @@ console.log(advantage.total)
 ## daggerheart
 
 ```ts
-import { rollDaggerheart, meetOrBeatDaggerheart } from '@RANDSUM/DAGGERHEART'
+import { rollDaggerheart, meetOrBeatDaggerheart } from '@randsum/daggerheart'
 
 // Duality dice rolls with hope/fear mechanics
 const basic = rollDaggerheart({ modifier: 2 })
@@ -56,7 +56,7 @@ console.log(basic.type, success.success) // 'hope'/'fear'/'critical hope', true/
 ## root-rpg
 
 ```ts
-import { rollRootRpg } from '@RANDSUM/ROOT-RPG'
+import { rollRootRpg } from '@randsum/root-rpg'
 
 const roll = rollRootRpg(0) // No bonus
 
@@ -67,7 +67,7 @@ console.log(roll.roll) // 2d6 + modifier total
 ## salvageunion
 
 ```ts
-import { rollTable } from '@RANDSUM/SALVAGEUNION'
+import { rollTable } from '@randsum/salvageunion'
 
 // Different table types
 const action = rollTable('Core Mechanic') // Standard action
