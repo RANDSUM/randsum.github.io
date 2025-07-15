@@ -6,15 +6,17 @@ lastModified: '2024-01-15'
 tags: ['dice', 'notation', 'gaming', 'rpg', 'typescript']
 ---
 
+# RANDSUM Dice Notation
+
 ## Overview
 
 Dice notation is a compact way to represent dice rolls and their modifications. For example, `4d20+2` means "roll four twenty-sided dice, then add two".
 
-RANDSUM extends standard dice notation with powerful modifiers like dropping lowest rolls, rerolling specific values, and ensuring unique results.
+Randsum extends standard dice notation with powerful modifiers like dropping lowest rolls, rerolling specific values, and ensuring unique results.
 
 ## Basic Syntax
 
-All notation in RANDSUM is case-insensitive (`2d8` = `2D8`).
+All notation in randsum is case-insensitive (`2d8` = `2D8`).
 
 ### Standard Rolls
 
@@ -34,30 +36,6 @@ roll({
   quantity: 4
 })
 ```
-
-### Custom-Faced Dice
-
-Roll dice with non-numeric faces:
-
-```typescript
-// Roll a coin (heads/tails) four times
-import { rollCustomFaces } from '@randsum/dice'
-
-rollCustomFaces('4d{HT}')
-rollCustomFaces({
-  sides: ['H', 'T'],
-  quantity: 4
-})
-
-// Roll Fudge/Fate dice
-rollCustomFaces('4d{++--  }') // Plus, minus, blank faces
-rollCustomFaces({
-  sides: ['+', '+', '-', '-', ' ', ' '],
-  quantity: 4
-})
-```
-
-Note: Custom-faced dice ignore modifiers and always return a total of 0.
 
 ## Modifiers
 
@@ -323,12 +301,6 @@ roll({
   }
 })
 ```
-
-## Notes
-
-- When using notation strings with custom faces, each face must be a single character
-- The options object interface allows for multi-character custom faces
-- See the [Getting Started Guide](../../GETTING_STARTED.md) for more usage examples
 
 ## Attribution
 

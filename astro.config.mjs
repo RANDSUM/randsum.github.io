@@ -12,8 +12,13 @@ export default defineConfig({
     syntaxHighlight: 'shiki',
     shikiConfig: {
       theme: 'dark-plus',
-      wrap: true
-    }
+      wrap: true,
+      transformers: []
+    },
+    remarkPlugins: [],
+    rehypePlugins: [],
+    gfm: true,
+    smartypants: true
   },
   vite: {
     resolve: {

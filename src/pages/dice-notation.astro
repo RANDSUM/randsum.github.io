@@ -26,24 +26,11 @@ const sidebarContent = generateSidebarFromHeadings(headings)
   description="Complete guide to RANDSUM dice notation syntax and modifiers"
   sidebarContent={sidebarContent}
 >
-  <SectionContainer>
-    <MainContent class="max-w-4xl">
-      <!-- Header -->
-      <div class="mb-12">
-        <h1 class="text-4xl font-bold text-silver-50 mb-4">
-          {title}
-        </h1>
-        <p class="text-xl text-silver-300 leading-relaxed">
-          {description}
-        </p>
-      </div>
-
-      <!-- Markdown Content -->
-      <div class="prose prose-invert max-w-none prose-lg">
-        <Content />
-      </div>
-    </MainContent>
-  </SectionContainer>
+  <MainContent class="max-w-4xl">
+    <div class="prose prose-invert max-w-none prose-lg">
+      <Content />
+    </div>
+  </MainContent>
 </Layout>
 
 <script>
@@ -71,7 +58,7 @@ const sidebarContent = generateSidebarFromHeadings(headings)
 
 <style>
   /* Custom styling for markdown content */
-  .prose {
+  :global(.prose) {
     --tw-prose-body: #dee2e6;
     --tw-prose-headings: #ffffff;
     --tw-prose-lead: #ced4da;
@@ -90,31 +77,63 @@ const sidebarContent = generateSidebarFromHeadings(headings)
     --tw-prose-td-borders: #3f3f46;
   }
 
-  .prose h2 {
+  :global(.prose h1) {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    border-bottom: 3px solid #52525b;
+    padding-bottom: 0.75rem;
+  }
+
+  :global(.prose h2) {
     font-size: 1.875rem;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 1.5rem;
     margin-top: 3rem;
+    border-bottom: 2px solid #3f3f46;
+    padding-bottom: 0.5rem;
   }
 
-  .prose h3 {
+  :global(.prose h3) {
     font-size: 1.5rem;
-    font-weight: 700;
-    color: #ffffff;
+    font-weight: 600;
+    color: #e9ecef;
     margin-bottom: 1rem;
     margin-top: 2rem;
+    border-left: 4px solid #52525b;
+    padding-left: 1rem;
   }
 
-  .prose h4 {
+  :global(.prose h4) {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #ffffff;
+    color: #ced4da;
     margin-bottom: 0.75rem;
     margin-top: 1.5rem;
   }
 
-  .prose code {
+  :global(.prose h5) {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #ced4da;
+    margin-bottom: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  :global(.prose h6) {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #ced4da;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  :global(.prose code) {
     background-color: #18181b;
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
@@ -124,7 +143,7 @@ const sidebarContent = generateSidebarFromHeadings(headings)
       Menlo, monospace;
   }
 
-  .prose pre {
+  :global(.prose pre) {
     background-color: #18181b;
     border: 1px solid #3f3f46;
     border-radius: 0.5rem;
@@ -132,29 +151,29 @@ const sidebarContent = generateSidebarFromHeadings(headings)
     overflow-x: auto;
   }
 
-  .prose pre code {
+  :global(.prose pre code) {
     background-color: transparent;
     padding: 0;
   }
 
-  .prose p {
+  :global(.prose p) {
     font-size: 1.125rem;
     color: #dee2e6;
     line-height: 1.75;
     margin-bottom: 1.5rem;
   }
 
-  .prose ul,
-  .prose ol {
+  :global(.prose ul),
+  :global(.prose ol) {
     color: #dee2e6;
     margin-bottom: 1.5rem;
   }
 
-  .prose li {
+  :global(.prose li) {
     margin-bottom: 0.5rem;
   }
 
-  .prose blockquote {
+  :global(.prose blockquote) {
     border-left: 4px solid #52525b;
     padding-left: 1rem;
     font-style: italic;

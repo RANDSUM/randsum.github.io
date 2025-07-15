@@ -14,7 +14,7 @@ import { roll, validateNotation } from '@randsum/roller'
 const userInput = '4d6L'
 const { valid, description, notation } = validateNotation(userInput)
 console.log(description) // Roll 4 6-sided dice, drop lowest
-if (notation) {
+if (valid && notation) {
   const { total } = roll(notation)
 }
 ```
@@ -25,7 +25,7 @@ if (notation) {
 import { rollBlades } from '@randsum/blades'
 
 const roll = rollBlades(4) // roll 2 d6, add 4
-console.log(roll.outcome) // 'critical' | 'success' | 'partial' | 'failure'
+console.log(roll.result) // 'critical' | 'success' | 'partial' | 'failure'
 ```
 
 ## fifth
@@ -34,8 +34,8 @@ console.log(roll.outcome) // 'critical' | 'success' | 'partial' | 'failure'
 import { d20roll } from '@randsum/fifth'
 
 // Different d20 roll types
-const advantage = d20roll({ modifier: 5, advantage: true })
-console.log(advantage.total)
+const advantage = d20roll({ modifier: 5, advantage: true }) // 2d20, Drop Lowest, Add 5
+console.log(advantage.details.total)
 ```
 
 ## daggerheart
@@ -44,13 +44,13 @@ console.log(advantage.total)
 import { rollDaggerheart, meetOrBeatDaggerheart } from '@randsum/daggerheart'
 
 // Duality dice rolls with hope/fear mechanics
-const basic = rollDaggerheart({ modifier: 2 })
-const withAdvantage = rollDaggerheart({ modifier: 3, rollingWith: 'Advantage' })
-const amplified = rollDaggerheart({ modifier: 1, amplifyHope: true })
+const basic = rollDaggerheart({ modifier: 2 }) // Roll 2d8+2
+const withAdvantage = rollDaggerheart({ modifier: 3, rollingWith: 'Advantage' }) // Roll 2d8+3 + 1D6 Advantage Die
+const amplified = rollDaggerheart({ modifier: 1, amplifyHope: true }) // Roll 1d8 Fear Die, 1d20 Hope die, add one
 
 // Check against target number
 const success = meetOrBeatDaggerheart(12, { modifier: 2 })
-console.log(basic.type, success.success) // 'hope'/'fear'/'critical hope', true/false
+console.log(basic.details.type, success.details.success) // 'hope'/'fear'/'critical hope', true/false
 ```
 
 ## root-rpg
@@ -60,8 +60,8 @@ import { rollRootRpg } from '@randsum/root-rpg'
 
 const roll = rollRootRpg(0) // No bonus
 
-console.log(roll.outcome) // 'Strong Hit' | 'Weak Hit' | 'Miss'
-console.log(roll.roll) // 2d6 + modifier total
+console.log(roll.result) // 'Strong Hit' | 'Weak Hit' | 'Miss'
+console.log(roll.details.roll) // 2d6 + modifier total
 ```
 
 ## salvageunion
@@ -72,5 +72,6 @@ import { rollTable } from '@randsum/salvageunion'
 // Different table types
 const action = rollTable('Core Mechanic') // Standard action
 
-console.log(action.hit, action.description) // Result type and details
+console.log(action.result) // "Nailed it!"
+console.log(action.details.description)
 ```
